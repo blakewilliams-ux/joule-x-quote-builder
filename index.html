@@ -10,6 +10,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="app-icon-192.png" />
+  <script src="config-images.js"></script>
 
   <style>
     :root {
@@ -932,15 +933,15 @@
           <div class="field-row config-row">
             <label>Select configuration</label>
             <div class="checkbox-grid">
-              <label class="checkbox-card"><input type="checkbox" value="BBL" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="BBL"><img class="config-icon-img" src="BBL.png" alt="BBL" onerror="handleImageError(this)" /></span></label>
-              <label id="heroicOption" class="checkbox-card disabled-choice"><input id="heroicCheckbox" type="checkbox" value="HEROIC" onchange="updateConfiguration()" disabled /><span class="checkbox-config-media" data-config-label="HEROic"><img class="config-icon-img" src="HEROic.png" alt="HEROic" onerror="handleImageError(this)" /></span></label>
+              <label class="checkbox-card"><input type="checkbox" value="BBL" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="BBL"><img class="config-icon-img" data-config="BBL" alt="BBL" /><span class="config-icon-fallback">BBL</span></span></label>
+              <label id="heroicOption" class="checkbox-card disabled-choice"><input id="heroicCheckbox" type="checkbox" value="HEROIC" onchange="updateConfiguration()" disabled /><span class="checkbox-config-media" data-config-label="Heroic"><img class="config-icon-img" data-config="HEROIC" alt="Heroic" /><span class="config-icon-fallback">Heroic</span></span></label>
               <label class="checkbox-card"><input type="checkbox" value="TOUCHUP" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="Touchup"><span class="config-icon-fallback">Touchup</span></span></label>
-              <label class="checkbox-card"><input type="checkbox" value="COMPLETE RESURFACING" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="Complete Resurfacing"><img class="config-icon-img" src="CompleteResurfacing.png" alt="Complete Resurfacing" onerror="handleImageError(this)" /></span></label>
-              <label class="checkbox-card"><input type="checkbox" value="HALO" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="Halo"><img class="config-icon-img" src="Halo.png" alt="Halo" onerror="handleImageError(this)" /></span></label>
-              <label class="checkbox-card"><input type="checkbox" value="DIVA" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="diVa"><img class="config-icon-img" src="diVa.png" alt="diVa" onerror="handleImageError(this)" /></span></label>
-              <label class="checkbox-card"><input type="checkbox" value="HALOTRIBRID" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="HaloTribrid"><img class="config-icon-img" src="HaloTribrid.png" alt="HaloTribrid" onerror="handleImageError(this)" /></span></label>
-              <label class="checkbox-card"><input type="checkbox" value="CLEAR SILK" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="ClearSilk"><img class="config-icon-img" src="ClearSilk.png" alt="ClearSilk" onerror="handleImageError(this)" /></span></label>
-              <label class="checkbox-card"><input type="checkbox" value="CLEAR V" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="ClearV"><img class="config-icon-img" src="ClearV.png" alt="ClearV" onerror="handleImageError(this)" /></span></label>
+              <label class="checkbox-card"><input type="checkbox" value="COMPLETE RESURFACING" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="Complete Resurfacing"><span class="config-icon-fallback">Complete Resurfacing</span></span></label>
+              <label class="checkbox-card"><input type="checkbox" value="HALO" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="Halo"><img class="config-icon-img" data-config="HALO" alt="Halo" /><span class="config-icon-fallback">Halo</span></span></label>
+              <label class="checkbox-card"><input type="checkbox" value="DIVA" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="diVa"><img class="config-icon-img" data-config="DIVA" alt="diVa" /><span class="config-icon-fallback">diVa</span></span></label>
+              <label class="checkbox-card"><input type="checkbox" value="HALOTRIBRID" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="HaloTribrid"><img class="config-icon-img" data-config="HALOTRIBRID" alt="HaloTribrid" /><span class="config-icon-fallback">HaloTribrid</span></span></label>
+              <label class="checkbox-card"><input type="checkbox" value="CLEAR SILK" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="ClearSilk"><img class="config-icon-img" data-config="CLEAR SILK" alt="ClearSilk" /><span class="config-icon-fallback">ClearSilk</span></span></label>
+              <label class="checkbox-card"><input type="checkbox" value="CLEAR V" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="ClearV"><img class="config-icon-img" data-config="CLEAR V" alt="ClearV" /><span class="config-icon-fallback">ClearV</span></span></label>
             </div>
           </div>
 
@@ -960,7 +961,7 @@
         <table class="data-table">
           <thead><tr><th>Core config</th><th>Status</th><th>Reference notes</th></tr></thead>
           <tbody>
-            <tr><td>NEW SYSTEM &gt; Joule X (N)</td><td class="status-online">Online</td><td>Mapped to the uploaded red-text Joule X reference rows only. Upgrade Joule X backend rows are excluded.</td></tr>
+            <tr><td>NEW SYSTEM &gt; Joule X (N)</td><td class="status-online">Online</td><td>Mapped to the uploaded red-text Joule X reference rows only. Upgrade Joule X backend rows are excluded</td></tr>
           </tbody>
         </table>
       </div>
@@ -1004,27 +1005,35 @@
       "HALOTRIBRID|TOUCHUP": "INT Joule X/HaloTribrid/Touchup",
       "HALOTRIBRID|COMPLETE RESURFACING": "INT Joule X/HaloTribrid/Complete Resurfacing",
       "BBL|HALOTRIBRID|TOUCHUP": "INT Joule X/BBL/HaloTribrid/Touchup",
-      "BBL|HALOTRIBRID|COMPLETE RESURFACING": "INT Joule X/BBL/HaloTribrid/Complete Resurfacing"
+      "BBL|HALOTRIBRID|COMPLETE RESURFACING": "INT Joule X/BBL/HaloTribrid/Complete Resurfacing",
+      "CLEAR SILK|TOUCHUP": "INT Joule X/ClearSilk/Touchup",
+      "CLEAR SILK|COMPLETE RESURFACING": "INT Joule X/ClearSilk/Complete Resurfacing",
+      "BBL|CLEAR SILK|TOUCHUP": "INT Joule X/BBL/ClearSilk/Touchup",
+      "BBL|CLEAR SILK|COMPLETE RESURFACING": "INT Joule X/BBL/ClearSilk/Complete Resurfacing",
+      "CLEAR V|TOUCHUP": "INT Joule X/ClearV/Touchup",
+      "CLEAR V|COMPLETE RESURFACING": "INT Joule X/ClearV/Complete Resurfacing",
+      "BBL|CLEAR V|TOUCHUP": "INT Joule X/BBL/ClearV/Touchup",
+      "BBL|CLEAR V|COMPLETE RESURFACING": "INT Joule X/BBL/ClearV/Complete Resurfacing",
+      "HALO|DIVA|TOUCHUP": "INT Joule X/Halo/diVa/Touchup",
+      "HALO|DIVA|COMPLETE RESURFACING": "INT Joule X/Halo/diVa/Complete Resurfacing",
+      "HALO|HALOTRIBRID|TOUCHUP": "INT Joule X/Halo/HaloTribrid/Touchup",
+      "HALO|HALOTRIBRID|COMPLETE RESURFACING": "INT Joule X/Halo/HaloTribrid/Complete Resurfacing",
+      "HALO|CLEAR SILK|TOUCHUP": "INT Joule X/Halo/ClearSilk/Touchup",
+      "HALO|CLEAR SILK|COMPLETE RESURFACING": "INT Joule X/Halo/ClearSilk/Complete Resurfacing",
+      "HALO|CLEAR V|TOUCHUP": "INT Joule X/Halo/ClearV/Touchup",
+      "HALO|CLEAR V|COMPLETE RESURFACING": "INT Joule X/Halo/ClearV/Complete Resurfacing"
     };
 
-    function handleImageError(img) {
-      const fallbackLabel = img.dataset.fallbackLabel || img.alt;
-      const span = document.createElement('span');
-      span.className = 'config-icon-fallback';
-      span.textContent = fallbackLabel;
-      img.parentNode.replaceChild(span, img);
-    }
-
     function updateSaleType() {
-      // Implementation
+      updateConfiguration();
     }
 
     function updateSystemType() {
-      // Implementation
+      updateConfiguration();
     }
 
     function updateConfiguration() {
-      // Implementation
+      refreshConfigImages();
     }
 
     function toggleTechnicalPanel() {
@@ -1035,6 +1044,13 @@
     function togglePricePanel() {
       const panel = document.getElementById('pricePanel');
       panel.classList.toggle('hidden');
+    }
+
+    function handleImageError(img) {
+      const fallback = img.parentElement?.querySelector('.config-icon-fallback');
+      if (fallback) {
+        fallback.style.display = 'inline-block';
+      }
     }
   </script>
 </body>
