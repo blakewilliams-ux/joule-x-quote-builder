@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Q2 2026 Quote Builder - Joule X</title>
+  <meta name="theme-color" content="#002b5c" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Joule X Quote" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="site-assets/app-icon-192.png" />
+
+  <style>
+    :root {
+      --panel: #ffffff;
+      --ink: #111827;
+      --muted: #667085;
+      --line: #d8dee8;
+      --dark: #08111f;
+      --soft: #f3f6fa;
+      --accent: #0067b1;
+      --accent-dark: #003f73;
+      --accent-soft: #e6f2fb;
+      --success: #00875a;
+      --warning: #b45309;
+      --danger: #b91c1c;
+      --light-red: #fca5a5;
+      --sciton-blue: #005da8;
+      --deep-blue: #002b5c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(0, 103, 177, 0.12), transparent 34%),
+        linear-gradient(135deg, #f8fafc 0%, #eef3f9 100%);
+      color: var(--ink);
+      padding: 32px;
+    }
+
+    .page { max-width: 1120px; margin: 0 auto; position: relative; }
+
+    .top-tabs {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
+      z-index: 10;
+    }
+
+    .mini-tab {
+      border: 1px solid var(--line);
+      background: #ffffff;
+      color: var(--accent-dark);
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      min-width: 92px;
+      text-align: center;
+    }
+
+    .mini-tab:hover { border-color: var(--accent); color: var(--accent); }
+
+    .header { text-align: center; margin-bottom: 28px; padding-top: 8px; }
+
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      margin-bottom: 14px;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.06);
+    }
+
+    .sciton-logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sciton-blue), #47a6d8);
+      position: relative;
+      box-shadow: inset 0 0 0 3px rgba(255,255,255,0.6);
+    }
+
+    .sciton-logo-mark::after {
+      content: "";
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #ffffff;
+      top: 6px;
+      left: 7px;
+      opacity: 0.9;
+    }
+
+    .brand-word {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      color: var(--accent-dark);
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .new-header-lockup {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .sciton-header-logo {
+      width: 100%;
+      text-align: left;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: var(--accent-dark);
+      line-height: 1.1;
+    }
+
+    .quote-builder-title {
+      width: 100%;
+      text-align: left;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+
+    .joule-x-logo {
+      width: 100%;
+      text-align: center;
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: var(--dark);
+      line-height: 1.15;
+    }
+
+    .frozen-hidden { display: none !important; }
+
+
+    h1 { margin: 0; font-size: 34px; letter-spacing: -0.04em; color: var(--dark); }
+
+    .subtitle {
+      margin: 10px auto 0;
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .builder {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
+      border-top: 5px solid var(--accent);
+    }
+
+    .main { padding: 32px; }
+
+    .step-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .step-label { color: var(--muted); font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .main h3 { margin: 0; font-size: 28px; letter-spacing: -0.03em; color: var(--dark); }
+
+    .required {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      border: 1px solid #b7d9f1;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 800;
+      margin: 20px 0 8px;
+      color: var(--ink);
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 14px;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .field-row label { margin: 0; }
+
+    select {
+      width: 100%;
+      height: 42px;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 0 16px;
+      background: white;
+      color: var(--ink);
+      font-size: 16px;
+      outline: none;
+    }
+
+    select:focus, .checkbox-grid input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0, 103, 177, 0.14);
+    }
+
+    .output-card {
+      margin-top: 19px;
+      min-height: 96px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .confirmation-card {
+      width: 33.333%;
+      min-height: 28px;
+      padding: 6px 8px;
+      line-height: 1.1;
+      border-radius: 10px;
+      margin-top: 8px;
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .confirmation-card .description,
+    .confirmation-card p,
+    .confirmation-card span {
+      line-height: 1.1;
+      font-size: 12px;
+      margin-bottom: 0;
+    }
+
+    .placeholder { color: var(--muted); line-height: 1.6; }
+    .hidden { display: none !important; }
+
+    .selected-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .selected-title span { color: var(--muted); display: block; font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+    .selected-title h4 { margin: 0; font-size: 26px; color: var(--dark); }
+
+    .confirmation-card .selected-title { margin-bottom: 4px; gap: 8px; }
+    .confirmation-card .selected-title h4 { font-size: 14px; line-height: 1.05; overflow-wrap: anywhere; }
+    .confirmation-card .code-pill { padding: 4px 7px; font-size: 10px; }
+
+    .code-pill {
+      padding: 7px 12px;
+      background: var(--accent);
+      color: white;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .warning-pill { background: var(--warning); }
+
+    .description { color: #334155; line-height: 1.7; margin: 0 0 18px; }
+    .pricing-match-note { font-size: 80%; line-height: 0.8; margin-bottom: 10px; }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .checkbox-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: #ffffff;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .checkbox-card input { width: 18px; height: 18px; accent-color: var(--accent); }
+
+    .checkbox-card.disabled-choice {
+      opacity: 0.48;
+      background: #eef2f7;
+      cursor: not-allowed;
+    }
+
+    .checkbox-card.disabled-choice input { cursor: not-allowed; }
+
+    .data-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 14px; }
+
+    .data-table th, .data-table td {
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+      vertical-align: top;
+    }
+
+    .data-table th {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .warranty-header {
+      color: var(--deep-blue);
+      font-weight: 900;
+      font-style: italic;
+    }
+
+    .warranty-options {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--deep-blue);
+      font-weight: 900;
+      font-style: italic;
+    }
+
+    .warranty-options input { accent-color: var(--deep-blue); }
+
+    .calculation-panel {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #ffffff;
+      padding: 18px;
+    }
+
+    .pricing-field-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+
+    .pricing-field label { margin-top: 0; }
+
+    .percent-input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 0 14px;
+      font-size: 16px;
+      font-weight: 700;
+      outline: none;
+    }
+
+    .percent-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0, 103, 177, 0.14);
+    }
+
+    .calculated-value {
+      min-height: 48px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 13px 14px;
+      font-size: 16px;
+      font-weight: 700;
+      background: #ffffff;
+      color: var(--ink);
+    }
+
+    .adjusted-value { background: #000000; color: #ffffff; font-weight: 800; }
+
+    .floor-price-exceeded {
+      color: var(--light-red);
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+    }
+
+    .field-note { margin-top: 8px; font-size: 13px; line-height: 1.45; }
+    .muted-note { color: var(--muted); }
+    .error-note { color: var(--danger); font-weight: 700; }
+
+    .commission-panel {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #ffffff;
+      padding: 18px;
+    }
+
+    .commission-heading {
+      text-align: center;
+      margin: 0 0 10px;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: var(--accent-dark);
+    }
+
+    .calculation-table { margin-top: 8px; }
+
+    .total-commission-row td {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--ink);
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+
+    .technical-panel {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .technical-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      background: var(--dark);
+      color: #ffffff;
+    }
+
+    .technical-panel-header strong { font-size: 16px; }
+    .technical-panel-header button {
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.1);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 7px 12px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .technical-panel-body { padding: 18px; }
+    .status-online { color: var(--success); font-weight: 900; }
+    .status-offline { color: var(--danger); font-weight: 900; }
+
+    .price-group { border: 1px solid var(--line); border-radius: 16px; margin-top: 12px; overflow: hidden; }
+    .price-group-header {
+      width: 100%;
+      border: 0;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .price-group-body { padding: 12px; }
+
+
+
+    .inline-select {
+      min-width: 110px;
+      height: 34px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+      background: #ffffff;
+    }
+
+    .inline-select:disabled, .gnf-control {
+      opacity: 0.48;
+      background: #eef2f7;
+      cursor: not-allowed;
+    }
+
+    .price-input {
+      width: 150px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-weight: 700;
+    }
+
+    .save-note { margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+
+    .temp-ref-label {
+      color: #b91c1c;
+      font-weight: 900;
+      font-size: 12px;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin: 0 0 4px;
+    }
+
+    .checkbox-card .temp-ref-label,
+    .warranty-options .temp-ref-label {
+      margin: 0 6px 0 0;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+
+
+    .quote-logo-header {
+      text-align: center;
+      margin-bottom: 22px;
+      padding-top: 4px;
+    }
+
+    .sciton-logo-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 8px;
+    }
+
+    .sciton-logo-img {
+      display: block;
+      max-width: 260px;
+      width: 48%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .quote-builder-title {
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      color: var(--dark);
+      text-align: center;
+      margin: 2px 0 10px;
+    }
+
+    .joule-x-logo-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .joule-x-logo-img {
+      display: block;
+      max-width: 220px;
+      width: 38%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .logo-fallback {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: var(--accent-dark);
+      line-height: 1;
+    }
+
+    .joule-x-fallback {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      color: var(--dark);
+      line-height: 1;
+    }
+
+    .frozen-system-fields { display: none !important; }
+
+    select.compact-select,
+    .compact-select {
+      height: 40px;
+      min-height: 40px;
+      padding: 0 12px;
+      font-size: 14px;
+    }
+
+
+
+    /* Header logo + configuration image handling */
+    .sciton-logo-row { justify-content: flex-start !important; margin: 0 0 8px !important; }
+    .sciton-logo-img { max-width: 300px !important; width: auto !important; max-height: 74px; object-fit: contain; }
+    .joule-x-logo-img { max-width: 230px !important; width: auto !important; max-height: 132px; object-fit: contain; }
+
+    #configurationBlock .checkbox-grid { gap: 12px; }
+
+    #configurationBlock .checkbox-card {
+      border: 0 !important;
+      background: #002b5c !important;
+      color: #ffffff !important;
+      box-shadow: none !important;
+      min-height: 78px;
+      padding: 12px 14px;
+      align-items: center;
+    }
+
+    #configurationBlock .checkbox-card input { flex: 0 0 auto; }
+    #configurationBlock .checkbox-card .temp-ref-label { display: none !important; }
+
+    .checkbox-config-media,
+    .selected-config-media {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .checkbox-config-media .config-icon-img { max-height: 46px; max-width: 180px; }
+    .selected-config-media .config-icon-img { max-height: 58px; max-width: 210px; }
+
+    .config-icon-img {
+      display: inline-block;
+      object-fit: contain;
+      vertical-align: middle;
+    }
+
+    .config-icon-fallback {
+      display: inline-block;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+    }
+
+    #configurationOutput .config-icon-fallback {
+      color: #002b5c;
+      border: 1px solid #d8dee8;
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: #ffffff;
+    }
+
+    /* Frontend pricing group cards */
+    .frontend-pricing-cards {
+      display: grid;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .frontend-price-card {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 0;
+      box-shadow: 0 12px 28px rgba(0, 43, 92, 0.12);
+    }
+
+    .frontend-price-card.ce-card { background: #002b5c; color: #d9f1ff; }
+    .frontend-price-card.ci-card {
+      background: #d9f1ff;
+      color: #002b5c;
+      border: 1px solid rgba(0, 43, 92, 0.16);
+    }
+
+    .frontend-price-card .card-title {
+      margin: 0;
+      padding: 14px 16px 8px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: inherit;
+    }
+
+    .frontend-price-card .data-table { margin-top: 0; color: inherit; }
+    .frontend-price-card .data-table th,
+    .frontend-price-card .data-table td {
+      color: inherit;
+      border-bottom: 1px solid currentColor;
+      font-weight: 400 !important;
+      vertical-align: middle;
+    }
+
+    .frontend-price-card.ce-card .data-table th,
+    .frontend-price-card.ce-card .data-table td { border-bottom-color: rgba(217, 241, 255, 0.28); }
+    .frontend-price-card.ci-card .data-table th,
+    .frontend-price-card.ci-card .data-table td { border-bottom-color: rgba(0, 43, 92, 0.18); }
+    .frontend-price-card .data-table th { opacity: 0.85; }
+    .frontend-price-card .total-row td { font-weight: 700 !important; font-size: 16px; border-bottom: 0 !important; }
+
+
+
+    .joule-x-reference-img {
+      display: inline-block;
+      max-height: 42px;
+      max-width: 150px;
+      object-fit: contain;
+      vertical-align: middle;
+    }
+
+    .frontend-price-card.ce-card .joule-x-reference-img {
+      filter: none;
+    }
+
+    .frontend-price-card .inline-select { height: 38px; min-height: 38px; border-radius: 10px; }
+    .frontend-price-card.ce-card .inline-select { background: #ffffff; color: #002b5c; border-color: rgba(217, 241, 255, 0.52); }
+    .frontend-price-card.ci-card .inline-select { background: #ffffff; color: #002b5c; border-color: rgba(0, 43, 92, 0.22); }
+
+    .frontend-price-card .temp-ref-label {
+      color: inherit !important;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      margin-bottom: 2px;
+    }
+
+    .frontend-price-card .muted-note { color: inherit !important; opacity: 0.78; }
+
+
+    /* View toggle: Detailed view / Totals Only */
+    .view-toggle-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 0 14px;
+    }
+
+    .view-toggle-title {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #002b5c;
+    }
+
+    .view-toggle-button {
+      border: 1px solid #b7d9f1;
+      background: #ffffff;
+      color: #002b5c;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .view-toggle-button.active {
+      background: #002b5c;
+      color: #d9f1ff;
+      border-color: #002b5c;
+    }
+
+    .totals-only-card {
+      background: #d9f1ff;
+      color: #002b5c;
+      border-color: rgba(0, 43, 92, 0.22);
+    }
+
+    .totals-only-card .data-table th,
+    .totals-only-card .data-table td {
+      color: #002b5c;
+      border-bottom-color: rgba(0, 43, 92, 0.18);
+      font-weight: 400 !important;
+      vertical-align: middle;
+    }
+
+    .totals-only-card .total-price-row td {
+      font-size: 22px;
+      font-weight: 800 !important;
+      border-bottom: 0 !important;
+      padding-top: 18px;
+      padding-bottom: 18px;
+    }
+
+    .totals-only-card .inline-select {
+      height: 38px;
+      min-height: 38px;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #002b5c;
+      border-color: rgba(0, 43, 92, 0.22);
+    }
+
+    .totals-floor-error {
+      color: #b91c1c !important;
+      font-weight: 900 !important;
+      letter-spacing: 0.02em;
+    }
+
+
+
+    /* Final layout corrections */
+    .temp-ref-label { display: none !important; }
+
+    .quote-logo-header { margin-bottom: 24px !important; }
+    .sciton-logo-row { justify-content: flex-start !important; min-height: 64px; margin: 0 0 8px !important; }
+    .sciton-logo-img { display: block !important; max-width: 315px !important; max-height: 70px !important; width: auto !important; height: auto !important; object-fit: contain !important; }
+    .quote-builder-title { margin: 4px 0 12px !important; text-align: center !important; font-size: 17px !important; font-weight: 900 !important; letter-spacing: 0.16em !important; color: #08111f !important; }
+    .joule-x-logo-row { justify-content: center !important; min-height: 112px; margin: 0 auto !important; }
+    .joule-x-logo-img { display: block !important; max-width: 255px !important; max-height: 128px !important; width: auto !important; height: auto !important; object-fit: contain !important; }
+
+    #configurationBlock .config-row { display: block !important; }
+    #configurationBlock .config-row > label { display: block !important; margin: 0 0 14px !important; font-size: 14px !important; color: #002b5c !important; }
+    #configurationBlock .checkbox-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: 18px !important;
+      align-items: stretch !important;
+    }
+    #configurationBlock .checkbox-card {
+      display: grid !important;
+      grid-template-columns: 26px minmax(0, 1fr) !important;
+      column-gap: 12px !important;
+      align-items: center !important;
+      min-height: 126px !important;
+      padding: 16px !important;
+      border: 0 !important;
+      border-radius: 18px !important;
+      background: #002b5c !important;
+      color: #ffffff !important;
+      box-shadow: 0 10px 24px rgba(0, 43, 92, 0.12) !important;
+      overflow: hidden !important;
+    }
+    #configurationBlock .checkbox-card.disabled-choice {
+      opacity: 0.46 !important;
+      filter: grayscale(1) !important;
+      cursor: not-allowed !important;
+    }
+    #configurationBlock .checkbox-card input { width: 20px !important; height: 20px !important; margin: 0 !important; }
+    #configurationBlock .checkbox-config-media {
+      width: 100% !important;
+      min-height: 88px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+    }
+    #configurationBlock .checkbox-config-media .config-icon-img {
+      display: block !important;
+      max-width: 100% !important;
+      max-height: 86px !important;
+      width: auto !important;
+      height: auto !important;
+      object-fit: contain !important;
+    }
+    #configurationBlock .config-icon-fallback { color: #ffffff !important; font-size: 18px !important; text-align: center !important; }
+
+    .frontend-price-card.ce-card .card-title { font-size: 28px !important; }
+    .frontend-price-card.ce-card .data-table { font-size: 28px !important; }
+    .frontend-price-card.ce-card .data-table th,
+    .frontend-price-card.ce-card .data-table td { font-size: 28px !important; line-height: 1.25 !important; }
+    .frontend-price-card.ce-card .inline-select { font-size: 24px !important; height: 56px !important; min-height: 56px !important; }
+    .frontend-price-card.ce-card .total-row td { font-size: 30px !important; }
+
+    @media (max-width: 980px) {
+      #configurationBlock .checkbox-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    }
+    @media (max-width: 860px) {
+      body { padding: 18px; }
+      .checkbox-grid { grid-template-columns: 1fr; }
+      .pricing-field-grid { grid-template-columns: 1fr; }
+      .top-tabs { position: static; margin-left: auto; align-items: flex-end; margin-bottom: 16px; }
+      .confirmation-card { width: 100%; }
+      .field-row { grid-template-columns: 1fr; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="top-tabs">
+      <button class="mini-tab" onclick="toggleTechnicalPanel()">Reference</button>
+      <button class="mini-tab" onclick="togglePricePanel()">Reference Price</button>
+    </div>
+
+    <section class="quote-logo-header">
+      <div class="sciton-logo-row">
+        <img class="sciton-logo-img" src="site-assets/Sciton.png" alt="Sciton" data-fallback-label="SCITON" data-source-index="0" data-srcs="site-assets/Sciton.png|site-assets/Sciton Logo.png|site-assets/Sciton Logo.jpg|site-assets/ScitonLogo.png|site-assets/ScitonLogo.jpg" onerror="tryNextImageSource(this, 'logo-fallback')" />
+      </div>
+      <div class="quote-builder-title">Q2 2026 QUOTE BUILDER</div>
+      <div class="joule-x-logo-row">
+        <img class="joule-x-logo-img" src="site-assets/Joule X.png" alt="Joule X" data-fallback-label="JOULE X" data-source-index="0" data-srcs="site-assets/Joule X.png|site-assets/Joule X Logo.png|site-assets/Joule X Logo.jpg|site-assets/JouleX.png|site-assets/JouleX Logo.png|site-assets/JouleX Logo.jpg" onerror="tryNextImageSource(this, 'joule-x-fallback')" />
+      </div>
+    </section>
+
+    <section class="builder">
+      <section class="main">
+        <div class="frozen-hidden" aria-hidden="true">
+          <select id="saleType" onchange="updateSaleType()">
+            <option value="N" selected>NEW SYSTEM (N)</option>
+          </select>
+          <select id="systemType" onchange="updateSystemType()">
+            <option value="Joule X|N" selected>Joule X (N)</option>
+          </select>
+          <div id="saleOutput"></div>
+          <div id="systemTypeBlock">
+            <div id="systemOutput"></div>
+          </div>
+        </div>
+
+        <div id="configurationBlock">
+          <div class="field-row config-row">
+            <label>Select configuration</label>
+            <div class="checkbox-grid">
+              <label class="checkbox-card"><input type="checkbox" value="BBL" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="BBL">BBL</span></label>
+              <label id="heroicOption" class="checkbox-card disabled-choice"><input id="heroicCheckbox" type="checkbox" value="HEROIC" onchange="updateConfiguration()" disabled /><span class="checkbox-config-media" data-config-label="HEROic">HEROic</span></label>
+              <label class="checkbox-card"><input type="checkbox" value="TOUCHUP" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="Touchup">Touchup</span></label>
+              <label class="checkbox-card"><input type="checkbox" value="COMPLETE RESURFACING" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="Complete Resurfacing">Complete Resurfacing</span></label>
+              <label class="checkbox-card"><input type="checkbox" value="HALO" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="Halo">Halo</span></label>
+              <label class="checkbox-card"><input type="checkbox" value="DIVA" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="diVa">diVa</span></label>
+              <label class="checkbox-card"><input type="checkbox" value="HALOTRIBRID" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="HaloTribrid">HaloTribrid</span></label>
+              <label class="checkbox-card"><input type="checkbox" value="CLEAR SILK" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="ClearSilk">ClearSilk</span></label>
+              <label class="checkbox-card"><input type="checkbox" value="CLEAR V" onchange="updateConfiguration()" /><span class="checkbox-config-media" data-config-label="ClearV">ClearV</span></label>
+            </div>
+          </div>
+
+          <div id="configurationOutput" class="output-card">
+            <div class="placeholder"><strong>No configuration selected</strong><br />Select one or more configuration fields to match pricing.</div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section id="technicalPanel" class="technical-panel hidden">
+      <div class="technical-panel-header">
+        <div><strong>Reference Copy — Configuration Status</strong></div>
+        <button onclick="toggleTechnicalPanel()">Hide</button>
+      </div>
+      <div class="technical-panel-body">
+        <table class="data-table">
+          <thead><tr><th>Core config</th><th>Status</th><th>Reference notes</th></tr></thead>
+          <tbody>
+            <tr><td>NEW SYSTEM &gt; Joule X (N)</td><td class="status-online">Online</td><td>Mapped to the uploaded red-text Joule X reference rows only. Upgrade Joule X backend rows are excluded from this version.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="pricePanel" class="technical-panel hidden">
+      <div class="technical-panel-header">
+        <div><strong>Reference Price</strong></div>
+        <button onclick="togglePricePanel()">Hide</button>
+      </div>
+      <div class="technical-panel-body" id="referencePriceBody"></div>
+    </section>
+  </main>
+
+  <script>
+    const saleTypeMeta = {
+      N: {
+        label: "NEW SYSTEM",
+        code: "N",
+        description: "New Joule X selected. Choose the Joule X configuration to continue.",
+        systemOptions: [
+          { label: "Joule X (N)", value: "Joule X", code: "N" }
+        ]
+      }
+    };
+
+    const jouleXNewConfigMap = {
+      "BBL": "INT Joule X BBL Only",
+      "TOUCHUP": "INT Joule X/Touchup",
+      "COMPLETE RESURFACING": "INT Joule X/Complete Resurfacing",
+      "BBL|TOUCHUP": "INT Joule X/Touchup/BBL",
+      "BBL|COMPLETE RESURFACING": "INT Joule X/Complete Resurfacing/BBL",
+      "HALO|TOUCHUP": "INT Joule X/Halo/Touchup",
+      "HALO|COMPLETE RESURFACING": "INT Joule X/Halo/Complete Resurfacing",
+      "BBL|HALO|TOUCHUP": "INT Joule X/BBL/Halo/Touchup",
+      "BBL|HALO|COMPLETE RESURFACING": "INT Joule X/BBL/Halo/Complete Resurfacing",
+      "DIVA|TOUCHUP": "INT Joule X/diVa/Touchup",
+      "DIVA|COMPLETE RESURFACING": "INT Joule X/diVa/Complete Resurfacing",
+      "BBL|DIVA|TOUCHUP": "INT Joule X/BBL/diVa/Touchup",
+      "BBL|DIVA|COMPLETE RESURFACING": "INT Joule X/BBL/diVa/Complete Resurfacing",
+      "HALO|DIVA|TOUCHUP": "INT Joule X/Halo/diVa/Touchup",
+      "HALO|DIVA|COMPLETE RESURFACING": "INT Joule X/Halo/diVa/Complete Resurfacing",
+      "BBL|HALO|DIVA|TOUCHUP": "INT Joule X/BBL/Halo/diVa/Touchup",
+      "BBL|HALO|DIVA|COMPLETE RESURFACING": "INT Joule X/BBL/Halo/diVa/Complete Resurfacing",
+      "HALOTRIBRID|TOUCHUP": "INT Joule X/HaloTribrid/Touchup",
+      "HALOTRIBRID|COMPLETE RESURFACING": "INT Joule X/HaloTribrid/Complete Resurfacing",
+      "BBL|HALOTRIBRID|TOUCHUP": "INT Joule X/BBL/HaloTribrid/Touchup",
+      "BBL|HALOTRIBRID|COMPLETE RESURFACING": "INT Joule X/BBL/HaloTribrid/Complete Resurfacing",
+      "CLEAR SILK|CLEAR V": "INT Joule X/Clearsilk/ClearV",
+      "BBL|CLEAR SILK": "INT Joule X/ClearSilk/BBL",
+      "BBL|CLEAR V": "INT Joule X/ClearV/BBL",
+      "BBL|CLEAR SILK|CLEAR V": "INT Joule X/ClearSilk/ClearV/BBL"
+};
+
+    const jouleXNewPriceMap = {
+      "INT Joule X BBL Only": 149389.05,
+      "INT Joule X/Touchup": 154724.37,
+      "INT Joule X/Complete Resurfacing": 197406.95,
+      "INT Joule X/Touchup/BBL": 208077.6,
+      "INT Joule X/Complete Resurfacing/BBL": 250760.18,
+      "INT Joule X/Halo/Touchup": 229418.89,
+      "INT Joule X/Halo/Complete Resurfacing": 272101.48,
+      "INT Joule X/BBL/Halo/Touchup": 282772.12,
+      "INT Joule X/BBL/Halo/Complete Resurfacing": 325454.71,
+      "INT Joule X/diVa/Touchup": 229418.89,
+      "INT Joule X/diVa/Complete Resurfacing": 272101.48,
+      "INT Joule X/BBL/diVa/Touchup": 282772.12,
+      "INT Joule X/BBL/diVa/Complete Resurfacing": 325454.71,
+      "INT Joule X/Halo/diVa/Touchup": 272101.48,
+      "INT Joule X/Halo/diVa/Complete Resurfacing": 314784.06,
+      "INT Joule X/BBL/Halo/diVa/Touchup": 325454.71,
+      "INT Joule X/BBL/Halo/diVa/Complete Resurfacing": 368137.29,
+      "INT Joule X/HaloTribrid/Touchup": 344935.11,
+      "INT Joule X/HaloTribrid/Complete Resurfacing": 387616.83,
+      "INT Joule X/BBL/HaloTribrid/Touchup": 398287.62,
+      "INT Joule X/BBL/HaloTribrid/Complete Resurfacing": 440970.78,
+      "INT Joule X/Clearsilk/ClearV": 197406.95,
+      "INT Joule X/ClearSilk/BBL": 219066.2,
+      "INT Joule X/ClearV/BBL": 235072.17,
+      "INT Joule X/ClearSilk/ClearV/BBL": 256413.46
+};
+
+    const heroicProductName = "HEROic with New System";
+    let heroicNewSystemPrice = 51549.01;
+
+    const clearSuiteArmAddOnPriceMap = {
+      "INT Joule X/(Add+ClearSilk)": 48017.91,
+      "INT Joule X/(Add+ClearV)": 64023.88,
+      "INT Joule X (Add+ClearSilk/ClearV)": 85365.17
+};
+
+    const priceGroups = [
+      { name: "NEW JOULE X", type: "price", keys: Object.keys(jouleXNewPriceMap), mapName: "new" },
+      { name: "Clear Suite System with Arm add on", type: "clearAddOn", keys: Object.keys(clearSuiteArmAddOnPriceMap), mapName: "clearAddOn" },
+      { name: "EXTRAS", type: "extras" },
+      { name: "COSTED INCLUSIONS", type: "inclusion" }
+    ];
+
+    const costedInclusions = [
+      { name: "Buffalo Smoke Evacuator", price: 4500 },
+      { name: "Concierge Marketing - Global Elite", price: 4335 },
+      { name: "Freight", price: 4500 },
+      { name: "Pulse Program - 1st Year - Unlimited", price: 0 }
+    ];
+
+    const successBuilderOptions = [
+      { name: "None", price: 0 },
+      { name: "Success Builder Bronze", price: 4476.245 },
+      { name: "Success Builder Silver", price: 8952.49 },
+      { name: "Success Builder Gold", price: 17904.98 }
+    ];
+
+    const extraPulseOptions = [
+      { name: "None", price: 0 },
+      { name: "+6m UNLTD", price: 13970 },
+      { name: "+12m UNLTD", price: 27941 },
+      { name: "+18m UNLTD", price: 41911 },
+      { name: "+24m UNLTD", price: 55882 },
+      { name: "+25k Bundle", price: 5500 },
+      { name: "+50k Bundle", price: 8000 }
+    ];
+
+    const warrantyOptions = [
+      { name: "12 M (standard)", rate: 0 },
+      { name: "24 M", rate: 0.075 },
+      { name: "36 M", rate: 0.15 }
+    ];
+
+    const extrasPriceMap = {
+      "Success Builder Bronze": 4476.245,
+      "Success Builder Silver": 8952.49,
+      "Success Builder Gold": 17904.98,
+      "+6m UNLTD": 13970,
+      "+12m UNLTD": 27941,
+      "+18m UNLTD": 41911,
+      "+24m UNLTD": 55882,
+      "+25k Bundle": 5500,
+      "+50k Bundle": 8000,
+      "BBLink Eyewear": 5081
+    };
+
+    let selectedSuccessBuilderName = "None";
+    let selectedWarrantyOptionName = "12 M (standard)";
+    let selectedExtraPulseName = "None";
+    let selectedBblinkQuantity = 0;
+    let bblinkEyewearPrice = 5081;
+    let currentQuoteView = "detailed";
+    let currentFloorIncreaseValue = "";
+
+    const optionOrder = ["BBL", "TOUCHUP", "COMPLETE RESURFACING", "HALO", "DIVA", "HALOTRIBRID", "CLEAR SILK", "CLEAR V", "HEROIC"];
+    const optionLabels = {
+      BBL: "BBL",
+      TOUCHUP: "Touchup",
+      "COMPLETE RESURFACING": "Complete Resurfacing",
+      HALO: "Halo",
+      DIVA: "diVa",
+      HALOTRIBRID: "HaloTribrid",
+      "CLEAR SILK": "ClearSilk",
+      "CLEAR V": "ClearV",
+      HEROIC: "HEROic"
+    };
+
+    function getElement(id) { return document.getElementById(id); }
+
+    function tempRef(label) { return ""; }
+
+    const configIconSources = {
+      "BBL": ["site-assets/config-icons/BBL.png", "site-assets/config-icons/BBL HEROic COLOR 300.png"],
+      "Touchup": ["site-assets/config-icons/Touchup.png", "site-assets/config-icons/Touch up.png"],
+      "Complete Resurfacing": ["site-assets/config-icons/Complete Resurfacing.png", "site-assets/config-icons/CompleteResurfacing.png"],
+      "Halo": ["site-assets/config-icons/Halo.png"],
+      "diVa": ["site-assets/config-icons/Diva.png", "site-assets/config-icons/diVa.png"],
+      "HaloTribrid": ["site-assets/config-icons/HaloTribrid.png"],
+      "ClearSilk": ["site-assets/config-icons/ClearSilk.png"],
+      "ClearV": ["site-assets/config-icons/ClearV.png"],
+      "ClearSuite": ["site-assets/config-icons/ClearSuite.png"],
+      "HEROic": ["site-assets/config-icons/HEROic.png", "site-assets/config-icons/BBL HEROic COLOR 300.png"]
+    };
+
+    function normaliseConfigLabel(label) {
+      const raw = String(label || "").trim();
+      const map = {
+        "DIVA": "diVa",
+        "CLEAR SILK": "ClearSilk",
+        "CLEAR V": "ClearV",
+        "HALOTRIBRID": "HaloTribrid",
+        "COMPLETE RESURFACING": "Complete Resurfacing",
+        "HEROIC": "HEROic"
+      };
+      return map[raw.toUpperCase()] || raw;
+    }
+
+    function tryNextImageSource(img, fallbackClass) {
+      const sources = String(img.dataset.srcs || "").split("|").filter(Boolean);
+      const currentIndex = Number(img.dataset.sourceIndex || 0);
+      const nextIndex = currentIndex + 1;
+      if (nextIndex < sources.length) {
+        img.dataset.sourceIndex = String(nextIndex);
+        img.src = sources[nextIndex];
+        return;
+      }
+      const fallback = document.createElement("span");
+      fallback.className = fallbackClass || "config-icon-fallback";
+      fallback.textContent = img.dataset.fallbackLabel || img.alt || "";
+      img.replaceWith(fallback);
+    }
+
+    function renderConfigIcon(label) {
+      const cleanLabel = normaliseConfigLabel(label);
+      const sources = configIconSources[cleanLabel] || [`site-assets/config-icons/${cleanLabel}.png`];
+      const escapedLabel = cleanLabel.replace(/"/g, "&quot;");
+      return `<img class="config-icon-img" src="${sources[0]}" alt="${escapedLabel}" data-fallback-label="${escapedLabel}" data-source-index="0" data-srcs="${sources.join("|")}" onerror="tryNextImageSource(this, 'config-icon-fallback')" />`;
+    }
+
+    function renderSelectedDisplayImages(displayText) {
+      const parts = String(displayText || "").split(",").map(part => part.trim()).filter(Boolean);
+      if (!parts.length) return "";
+      return `<span class="selected-config-media">${parts.map(renderConfigIcon).join("")}</span>`;
+    }
+
+    function hydrateConfigMenuImages() {
+      document.querySelectorAll(".checkbox-config-media[data-config-label]").forEach(node => {
+        node.innerHTML = renderConfigIcon(node.dataset.configLabel || node.textContent || "");
+      });
+    }
+
+
+    function shortRefFor(label) {
+      const refs = {
+        "NEW JOULE X": "NJX",
+        "Clear Suite System with Arm add on": "CSSAO",
+        "EXTRAS": "EX",
+        "COSTED INCLUSIONS": "CI",
+        "Product Name": "PN",
+        "AUD Floor Reference": "AFR"
+      };
+      return refs[label] || label.split(/\s+/).filter(Boolean).map(word => word[0]).join("").toUpperCase();
+    }
+
+
+    function formatCurrency(value) {
+      return value.toLocaleString("en-AU", { style: "currency", currency: "AUD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function toggleTechnicalPanel() { getElement("technicalPanel").classList.toggle("hidden"); }
+
+    function togglePricePanel() {
+      const pricePanel = getElement("pricePanel");
+      const isOpening = pricePanel.classList.contains("hidden");
+      if (isOpening) {
+        const password = window.prompt("Enter password to view Reference Price:");
+        if (password !== "0000") {
+          window.alert("Incorrect password.");
+          return;
+        }
+        renderReferencePriceRows();
+      }
+      pricePanel.classList.toggle("hidden");
+    }
+
+    function togglePriceGroup(groupId) { getElement(groupId).classList.toggle("hidden"); }
+
+    function renderReferencePriceRows() {
+      const body = getElement("referencePriceBody");
+      body.innerHTML = priceGroups.map((group, index) => {
+        const groupId = `priceGroup${index}`;
+        if (group.type === "price" || group.type === "clearAddOn") {
+          const sourceMap = group.type === "price" ? jouleXNewPriceMap : clearSuiteArmAddOnPriceMap;
+          const rows = group.keys.map(name => `
+            <tr>
+              <td>${name}</td>
+              <td><input class="price-input" type="number" step="0.01" value="${sourceMap[name].toFixed(2)}" onchange="updateReferencePrice('${group.mapName}', '${name}', this.value)" /></td>
+            </tr>
+          `).join("");
+          return renderPriceGroup(group.name, groupId, rows, group.type !== "price");
+        }
+        if (group.type === "extras") {
+          const rows = successBuilderOptions.filter(item => item.name !== "None").map(item => `
+            <tr>
+              <td>${item.name}</td>
+              <td><input class="price-input" type="number" step="0.01" value="${item.price.toFixed(2)}" onchange="updateExtraPrice('${item.name}', this.value)" /></td>
+            </tr>
+          `).join("") + `
+            ${warrantyOptions.map(option => `
+              <tr>
+                <td>${option.name}</td>
+                <td>${option.rate === 0 ? formatCurrency(0) : `Formula: ${(option.rate * 100).toFixed(1)}% × (Joule X floor + HEROic where selected)`}</td>
+              </tr>
+            `).join("")}
+            <tr>
+              <td colspan="2"><strong>Add Extra pulses</strong></td>
+            </tr>
+            ${extraPulseOptions.filter(item => item.name !== "None").map(item => `
+              <tr>
+                <td>${item.name}</td>
+                <td><input class="price-input" type="number" step="0.01" value="${item.price.toFixed(2)}" onchange="updateExtraPrice('${item.name}', this.value)" /></td>
+              </tr>
+            `).join("")}
+            <tr>
+              <td>BBLink Eyewear</td>
+              <td><input class="price-input" type="number" step="0.01" value="${bblinkEyewearPrice.toFixed(2)}" onchange="updateExtraPrice('BBLink Eyewear', this.value)" /></td>
+            </tr>
+          `;
+          return renderPriceGroup(group.name, groupId, rows, true);
+        }
+        const rows = costedInclusions.length
+          ? costedInclusions.map((item, itemIndex) => `
+            <tr>
+              <td>${item.name}</td>
+              <td><input class="price-input" type="number" step="0.01" value="${item.price.toFixed(2)}" onchange="updateInclusionPrice(${itemIndex}, this.value)" /></td>
+            </tr>
+          `).join("")
+          : `<tr><td colspan="2">No costed inclusions reference data available yet.</td></tr>`;
+        return renderPriceGroup(group.name, groupId, rows, true);
+      }).join("") + `
+        <div class="save-note">Price changes update calculations in this draft while the page remains open. Costed inclusions are excluded from commission calculations and only contribute to TOTAL PRICE when configured.</div>
+      `;
+    }
+
+    function renderPriceGroup(name, groupId, rows, collapsed) {
+      return `
+        <div class="price-group">
+          ${tempRef(shortRefFor(name))}
+          <button class="price-group-header" onclick="togglePriceGroup('${groupId}')">${name}</button>
+          <div id="${groupId}" class="price-group-body ${collapsed ? "hidden" : ""}">
+            <table class="data-table">
+              <thead><tr><th>${tempRef("PN")}Product Name</th><th>${tempRef("AFR")}AUD Floor Reference</th></tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateReferencePrice(mapName, name, value) {
+      const parsed = Number(value);
+      if (!Number.isNaN(parsed) && parsed >= 0) {
+        if (mapName === "new") jouleXNewPriceMap[name] = parsed;
+        if (mapName === "clearAddOn") clearSuiteArmAddOnPriceMap[name] = parsed;
+        updateConfiguration();
+      }
+    }
+
+    function updateInclusionPrice(index, value) {
+      const parsed = Number(value);
+      if (!Number.isNaN(parsed) && parsed >= 0 && costedInclusions[index]) {
+        costedInclusions[index].price = parsed;
+        updateConfiguration();
+      }
+    }
+
+    function updateExtraPrice(name, value) {
+      const parsed = Number(value);
+      if (Number.isNaN(parsed) || parsed < 0) return;
+      if (name === "BBLink Eyewear") {
+        bblinkEyewearPrice = parsed;
+      } else {
+        const successOption = successBuilderOptions.find(item => item.name === name);
+        if (successOption) successOption.price = parsed;
+        const pulseOption = extraPulseOptions.find(item => item.name === name);
+        if (pulseOption) pulseOption.price = parsed;
+        extrasPriceMap[name] = parsed;
+      }
+      updateConfiguration();
+    }
+
+    function updateSuccessBuilderSelection(value) {
+      selectedSuccessBuilderName = value || "None";
+      updateConfiguration();
+    }
+
+    function updateExtraPulseSelection(value) {
+      selectedExtraPulseName = value || "None";
+      updateConfiguration();
+    }
+
+    function updateBblinkQuantity(value) {
+      selectedBblinkQuantity = Number(value) || 0;
+      updateConfiguration();
+    }
+
+    function setQuoteView(viewName) {
+      currentQuoteView = viewName === "totals" ? "totals" : "detailed";
+      updateConfiguration();
+    }
+
+    function updateSaleType() {
+      const saleTypeValue = getElement("saleType").value;
+      const saleOutput = getElement("saleOutput");
+      const systemTypeBlock = getElement("systemTypeBlock");
+      const configurationBlock = getElement("configurationBlock");
+      const systemTypeSelect = getElement("systemType");
+      const systemOutput = getElement("systemOutput");
+
+      systemTypeSelect.innerHTML = '<option value="">Choose system type</option>';
+      systemOutput.innerHTML = `<div class="placeholder"><div class="temp-ref-label">NSyT</div><strong>No system type selected</strong><br />Select Joule X to continue.</div>`;
+      resetConfiguration();
+      configurationBlock.classList.add("hidden");
+
+      if (!saleTypeValue) {
+        systemTypeBlock.classList.add("hidden");
+        saleOutput.innerHTML = `<div class="placeholder"><div class="temp-ref-label">NST</div><strong>No sale type selected</strong><br />Select NEW SYSTEM or UPGRADE to continue.</div>`;
+        return;
+      }
+
+      const selectedSaleType = saleTypeMeta[saleTypeValue];
+      selectedSaleType.systemOptions.forEach(option => {
+        const optionElement = document.createElement("option");
+        optionElement.value = `${option.value}|${option.code}`;
+        optionElement.textContent = option.label;
+        systemTypeSelect.appendChild(optionElement);
+      });
+
+      systemTypeBlock.classList.remove("hidden");
+      saleOutput.innerHTML = `
+        <div class="selected-title">
+          <div>${tempRef("SST")}<span>Selected sale type</span><h4>${selectedSaleType.label}</h4></div>
+          <div class="code-pill">${selectedSaleType.code}</div>
+        </div>
+        <p class="description">${selectedSaleType.description}</p>
+      `;
+    }
+
+    function updateSystemType() {
+      const systemTypeValue = getElement("systemType").value;
+      const systemOutput = getElement("systemOutput");
+      const configurationBlock = getElement("configurationBlock");
+
+      resetConfiguration();
+      configurationBlock.classList.add("hidden");
+
+      if (!systemTypeValue) {
+        systemOutput.innerHTML = `<div class="placeholder"><div class="temp-ref-label">NSyT</div><strong>No system type selected</strong><br />Select Joule X to continue.</div>`;
+        return;
+      }
+
+      const [systemName, systemCode] = systemTypeValue.split("|");
+      configurationBlock.classList.remove("hidden");
+
+      systemOutput.innerHTML = `
+        <div class="selected-title">
+          <div>${tempRef("SSyT")}<span>Selected system type</span><h4>${systemName} (${systemCode})</h4></div>
+          <div class="code-pill">${systemCode}</div>
+        </div>
+        <p class="description">Select the Joule X configuration below.</p>
+      `;
+    }
+
+    function getSelectedConfigurationItems() {
+      return Array.from(document.querySelectorAll('#configurationBlock input[type="checkbox"]:checked')).map(input => input.value);
+    }
+
+    function getCheckbox(value) {
+      return document.querySelector(`#configurationBlock input[value="${value}"]`);
+    }
+
+    function setCheckboxState(value, disabled) {
+      const input = getCheckbox(value);
+      if (!input) return;
+      input.disabled = disabled;
+      const card = input.closest(".checkbox-card");
+      if (card) card.classList.toggle("disabled-choice", disabled);
+    }
+
+    function setChecked(value, checked) {
+      const input = getCheckbox(value);
+      if (input) input.checked = checked;
+    }
+
+    function updateConfigurationAvailability() {
+      const completeInput = getCheckbox("COMPLETE RESURFACING");
+      const touchupInput = getCheckbox("TOUCHUP");
+      const haloInput = getCheckbox("HALO");
+      const divaInput = getCheckbox("DIVA");
+      const haloTribridInput = getCheckbox("HALOTRIBRID");
+      const bblInput = getCheckbox("BBL");
+      const heroicInput = getCheckbox("HEROIC");
+      const heroicOption = getElement("heroicOption");
+
+      const bblSelected = !!(bblInput && bblInput.checked);
+      if (heroicOption) heroicOption.classList.remove("hidden");
+      if (!bblSelected && heroicInput) heroicInput.checked = false;
+      setCheckboxState("HEROIC", !bblSelected);
+
+      const completeSelected = !!(completeInput && completeInput.checked);
+      const touchupSelected = !!(touchupInput && touchupInput.checked);
+
+      // Touchup and Complete Resurfacing never occur on the same New Joule X product-name reference.
+      if (completeSelected) {
+        setChecked("TOUCHUP", false);
+        setCheckboxState("TOUCHUP", true);
+        setCheckboxState("COMPLETE RESURFACING", false);
+      } else if (touchupSelected) {
+        setCheckboxState("TOUCHUP", false);
+        setCheckboxState("COMPLETE RESURFACING", true);
+      } else {
+        setCheckboxState("TOUCHUP", false);
+        setCheckboxState("COMPLETE RESURFACING", false);
+      }
+
+      const activeBase = (!!(touchupInput && touchupInput.checked) || !!(completeInput && completeInput.checked));
+      ["HALO", "DIVA", "HALOTRIBRID"].forEach(value => {
+        if (!activeBase) setChecked(value, false);
+        setCheckboxState(value, !activeBase);
+      });
+
+      const haloSelected = !!(haloInput && haloInput.checked);
+      const divaSelected = !!(divaInput && divaInput.checked);
+      const haloTribridSelected = !!(haloTribridInput && haloTribridInput.checked);
+
+      // HaloTribrid is its own path. Do not combine it with Halo or diVa unless the backend reference exists.
+      if (activeBase && haloTribridSelected) {
+        setChecked("HALO", false);
+        setChecked("DIVA", false);
+        setCheckboxState("HALO", true);
+        setCheckboxState("DIVA", true);
+        setCheckboxState("HALOTRIBRID", false);
+      } else if (activeBase && (haloSelected || divaSelected)) {
+        setChecked("HALOTRIBRID", false);
+        setCheckboxState("HALOTRIBRID", true);
+        setCheckboxState("HALO", false);
+        setCheckboxState("DIVA", false);
+      }
+    }
+
+    function getSelectedConfigurationItems() {
+      return Array.from(document.querySelectorAll('#configurationBlock input[type="checkbox"]:checked')).map(input => input.value);
+    }
+
+    function extractReferenceTokens(productName) {
+      const text = productName.toLowerCase();
+      const tokens = [];
+      if (/bbl/.test(text)) tokens.push("BBL");
+      if (/complete\s+resurfacing/.test(text)) tokens.push("COMPLETE RESURFACING");
+      if (/touchup/.test(text)) tokens.push("TOUCHUP");
+      if (/halotribrid/.test(text)) tokens.push("HALOTRIBRID");
+      else if (/halo/.test(text)) tokens.push("HALO");
+      if (/diva/.test(text)) tokens.push("DIVA");
+      if (/clearsilk/.test(text)) tokens.push("CLEAR SILK");
+      if (/clearv/.test(text)) tokens.push("CLEAR V");
+      return optionOrder.filter(option => tokens.includes(option));
+    }
+
+    const jouleXNewReferenceRows = Object.keys(jouleXNewPriceMap).map(productName => ({
+      productName,
+      price: jouleXNewPriceMap[productName],
+      tokens: extractReferenceTokens(productName)
+    }));
+
+    const addOnEligibleReferenceNames = [
+      "INT Joule X/Touchup",
+      "INT Joule X/Complete Resurfacing",
+      "INT Joule X/Touchup/BBL",
+      "INT Joule X/Complete Resurfacing/BBL",
+      "INT Joule X/Halo/Touchup",
+      "INT Joule X/Halo/Complete Resurfacing",
+      "INT Joule X/BBL/Halo/Touchup",
+      "INT Joule X/BBL/Halo/Complete Resurfacing",
+      "INT Joule X/diVa/Touchup",
+      "INT Joule X/diVa/Complete Resurfacing",
+      "INT Joule X/BBL/diVa/Touchup",
+      "INT Joule X/BBL/diVa/Complete Resurfacing",
+      "INT Joule X/Halo/diVa/Touchup",
+      "INT Joule X/Halo/diVa/Complete Resurfacing",
+      "INT Joule X/BBL/Halo/diVa/Touchup",
+      "INT Joule X/BBL/Halo/diVa/Complete Resurfacing",
+      "INT Joule X/HaloTribrid/Touchup",
+      "INT Joule X/HaloTribrid/Complete Resurfacing",
+      "INT Joule X/BBL/HaloTribrid/Touchup",
+      "INT Joule X/BBL/HaloTribrid/Complete Resurfacing"
+    ];
+
+    const addOnEligibleReferences = addOnEligibleReferenceNames.map(productName => ({
+      productName,
+      price: jouleXNewPriceMap[productName],
+      tokens: extractReferenceTokens(productName)
+    }));
+
+    function sameTokenSet(a, b) {
+      if (a.length !== b.length) return false;
+      return a.every(item => b.includes(item));
+    }
+
+    function findNewJouleXReference(configItems) {
+      const tokens = optionOrder.filter(option => configItems.includes(option) && option !== "HEROIC");
+      return jouleXNewReferenceRows.find(row => sameTokenSet(row.tokens, tokens));
+    }
+
+    function findAddOnBaseReference(configItems) {
+      const baseTokens = optionOrder.filter(option =>
+        configItems.includes(option) &&
+        option !== "HEROIC" &&
+        option !== "CLEAR SILK" &&
+        option !== "CLEAR V"
+      );
+      if (!baseTokens.length) return null;
+      return addOnEligibleReferences.find(row => sameTokenSet(row.tokens, baseTokens));
+    }
+
+    function getClearSuiteAddOnRows(configItems) {
+      const hasClearSilk = configItems.includes("CLEAR SILK");
+      const hasClearV = configItems.includes("CLEAR V");
+      if (hasClearSilk && hasClearV) return ["INT Joule X (Add+ClearSilk/ClearV)"];
+      if (hasClearSilk) return ["INT Joule X/(Add+ClearSilk)"];
+      if (hasClearV) return ["INT Joule X/(Add+ClearV)"];
+      return [];
+    }
+
+    function buildSelectedConfigurationDisplay(selectedItems) {
+      const displayParts = [];
+      optionOrder.forEach(option => {
+        if (option === "CLEAR SILK") {
+          if (selectedItems.includes("CLEAR SILK") && selectedItems.includes("CLEAR V")) displayParts.push("ClearSuite");
+          else if (selectedItems.includes("CLEAR SILK")) displayParts.push(optionLabels[option]);
+          return;
+        }
+        if (option === "CLEAR V") {
+          if (!selectedItems.includes("CLEAR SILK") && selectedItems.includes("CLEAR V")) displayParts.push(optionLabels[option]);
+          return;
+        }
+        if (selectedItems.includes(option)) displayParts.push(optionLabels[option]);
+      });
+      return displayParts.join(", ");
+    }
+
+    function updateConfiguration() {
+      const configurationOutput = getElement("configurationOutput");
+      updateConfigurationAvailability();
+      const selectedItems = getSelectedConfigurationItems();
+
+      if (selectedItems.length === 0) {
+        configurationOutput.innerHTML = `<div class="placeholder"><strong>No configuration selected</strong><br />Select one or more configuration fields to match pricing.</div>`;
+        return;
+      }
+
+      const configItems = selectedItems.filter(item => item !== "HEROIC");
+      if (!configItems.includes("BBL") && selectedExtraPulseName !== "None") selectedExtraPulseName = "None";
+      const heroicSelected = selectedItems.includes("HEROIC");
+      const selectedDisplay = buildSelectedConfigurationDisplay(selectedItems);
+      const hasClearSuiteSelection = configItems.includes("CLEAR SILK") || configItems.includes("CLEAR V");
+      const addOnBaseReference = hasClearSuiteSelection ? findAddOnBaseReference(configItems) : null;
+      let referenceRow = null;
+      let componentRows = [];
+      let combinedBasePrice = 0;
+      let pricingMatchHtml = "";
+
+      if (addOnBaseReference) {
+        const addOnRows = getClearSuiteAddOnRows(configItems);
+        componentRows = [addOnBaseReference.productName, ...addOnRows];
+        combinedBasePrice = componentRows.reduce((sum, rowName) => sum + getReferencePrice(rowName), 0);
+        referenceRow = { productName: addOnBaseReference.productName, price: combinedBasePrice };
+        pricingMatchHtml = componentRows.map(rowName => `<strong>${rowName}</strong>`).join(" + ");
+      } else {
+        referenceRow = findNewJouleXReference(configItems);
+        if (referenceRow) {
+          componentRows = [];
+          combinedBasePrice = referenceRow.price;
+          pricingMatchHtml = `<strong>${referenceRow.productName}</strong>`;
+        }
+      }
+
+      if (!referenceRow) {
+        configurationOutput.innerHTML = `
+          <div class="selected-title">
+            <div>${tempRef("SC")}<span>Selected configuration</span><h4>${renderSelectedDisplayImages(selectedDisplay)}</h4></div>
+            <div class="code-pill warning-pill">No exact match</div>
+          </div>
+          <p class="description pricing-match-note">This New Joule X combination does not match the active backend product-name tokens. ClearSilk/ClearV native combinations are matched from the New Joule X card only when selected as ClearSuite/ClearSuite + BBL combinations. ClearSilk/ClearV added to Touchup or Complete Resurfacing combinations uses the Clear Suite System with Arm add on backend card.</p>
+        `;
+        return;
+      }
+
+      configurationOutput.innerHTML = `
+        <div class="selected-title">
+          <div>${tempRef("SC")}<span>Selected configuration</span><h4>${renderSelectedDisplayImages(selectedDisplay)}</h4></div>
+          <div class="code-pill">Exact match</div>
+        </div>
+        ${tempRef("PM")}
+        <p class="description pricing-match-note">Pricing match: ${pricingMatchHtml}.</p>
+        ${renderPricing(referenceRow.productName, combinedBasePrice, selectedDisplay, componentRows, heroicSelected)}
+      `;
+    }
+
+    function getReferencePrice(name) {
+      if (Object.prototype.hasOwnProperty.call(jouleXNewPriceMap, name)) return jouleXNewPriceMap[name];
+      if (Object.prototype.hasOwnProperty.call(clearSuiteArmAddOnPriceMap, name)) return clearSuiteArmAddOnPriceMap[name];
+      return 0;
+    }
+
+    function getSelectedWarrantyOption() {
+      return warrantyOptions.find(option => option.name === selectedWarrantyOptionName) || warrantyOptions[0];
+    }
+
+    function getCostedInclusionPrice(name) {
+      const item = costedInclusions.find(entry => entry.name === name);
+      return item ? Number(item.price || 0) : 0;
+    }
+
+    function referenceSetContains(referenceField, componentRows, pattern) {
+      return [referenceField, ...(componentRows || [])].some(name => pattern.test(String(name || "")));
+    }
+
+    function updateWarrantySelection(value, referenceField, basePrice, selectedDisplay, componentRows, heroicSelected = false) {
+      selectedWarrantyOptionName = value || "12 M (standard)";
+      getElement("pricingRenderTarget").innerHTML = renderPricing(referenceField, basePrice, selectedDisplay, componentRows, heroicSelected);
+    }
+
+    function renderPricing(referenceField, basePrice, selectedDisplay, componentRows = [], heroicSelected = false) {
+      const heroicPrice = heroicSelected ? heroicNewSystemPrice : 0;
+      const selectionPrice = basePrice + heroicPrice;
+      const selectedWarrantyOption = getSelectedWarrantyOption();
+      const warrantyPrice = selectionPrice * Number(selectedWarrantyOption.rate || 0);
+      const hasBbl = referenceSetContains(referenceField, componentRows, /BBL/i) || /BBL/i.test(selectedDisplay || "");
+      const hasTouchupOrComplete = referenceSetContains(referenceField, componentRows, /Touchup|Complete\s+Resurfacing/i);
+
+      if (!hasBbl && selectedExtraPulseName !== "None") selectedExtraPulseName = "None";
+      if (!hasBbl && selectedBblinkQuantity !== 0) selectedBblinkQuantity = 0;
+
+      const selectedSuccessBuilder = successBuilderOptions.find(item => item.name === selectedSuccessBuilderName) || successBuilderOptions[0];
+      const successBuilderTotal = Number(selectedSuccessBuilder.price || 0);
+      const selectedExtraPulse = extraPulseOptions.find(item => item.name === selectedExtraPulseName) || extraPulseOptions[0];
+      const extraPulseTotal = hasBbl ? Number(selectedExtraPulse.price || 0) : 0;
+      const bblinkTotal = hasBbl ? selectedBblinkQuantity * Number(bblinkEyewearPrice || 0) : 0;
+
+      const buffaloTotal = hasTouchupOrComplete ? getCostedInclusionPrice("Buffalo Smoke Evacuator") : 0;
+      const conciergeTotal = getCostedInclusionPrice("Concierge Marketing - Global Elite");
+      const freightTotal = getCostedInclusionPrice("Freight");
+      const pulseProgramTotal = hasBbl ? getCostedInclusionPrice("Pulse Program - 1st Year - Unlimited") : 0;
+
+      const commissionEligibleFloor = selectionPrice + warrantyPrice + bblinkTotal;
+      const nonCommissionEligibleTotal = extraPulseTotal + successBuilderTotal + buffaloTotal + conciergeTotal + freightTotal + pulseProgramTotal;
+      const totalPrice = commissionEligibleFloor + nonCommissionEligibleTotal;
+
+      const extraPulseDisabled = !hasBbl;
+      const extraPulseDisabledText = extraPulseDisabled ? "disabled" : "";
+      const extraPulseStatus = extraPulseDisabled ? `<div class="field-note muted-note">GNF unless BBL is selected.</div>` : "";
+      const viewTitle = currentQuoteView === "totals" ? "Totals Only" : "Detailed view";
+      const viewToggleHtml = `
+        <div class="view-toggle-row" aria-label="Quote view selector">
+          <span class="view-toggle-title">${viewTitle}</span>
+          <button type="button" class="view-toggle-button ${currentQuoteView === "detailed" ? "active" : ""}" onclick="setQuoteView('detailed')">Detailed view</button>
+          <button type="button" class="view-toggle-button ${currentQuoteView === "totals" ? "active" : ""}" onclick="setQuoteView('totals')">Totals Only</button>
+        </div>
+      `;
+      const selectionReferenceHtml = componentRows.length
+        ? componentRows.map(row => row).join("<br>")
+        : renderSelectedDisplayImages(selectedDisplay.replace(", HEROic", ""));
+      const selectionTotalsOnlyHtml = `${selectionReferenceHtml}${heroicSelected ? `<br>${heroicProductName}` : ""}`;
+      const floorIncreaseNumber = Number(currentFloorIncreaseValue);
+      const hasValidFloorIncreaseValue = currentFloorIncreaseValue !== "" && !Number.isNaN(floorIncreaseNumber) && floorIncreaseNumber >= 0;
+      const totalsOnlyTotalPriceDisplay = hasValidFloorIncreaseValue ? formatCurrency(totalPrice) : `<span class="totals-floor-error">ERROR- CHECK FLOOR %</span>`;
+      const bblinkDetailedRow = hasBbl ? `
+                  <tr>
+                    <td>BBLINK Eyewear (QTY)</td>
+                    <td>
+                      <select class="inline-select" onchange="updateBblinkQuantity(this.value)">
+                        ${[0,1,2,3,4,5].map(q => `<option value="${q}" ${selectedBblinkQuantity === q ? "selected" : ""}>${q === 0 ? "None" : q}</option>`).join("")}
+                      </select>
+                    </td>
+                    <td>${formatCurrency(bblinkTotal)}</td>
+                  </tr>` : "";
+      const pulseProgramDetailedRow = hasBbl ? `<tr><td>Pulse Program - 1st Year - Unlimited</td><td>Costed inclusion</td><td>${formatCurrency(pulseProgramTotal)}</td></tr>` : "";
+      const extraPulseDetailedRow = hasBbl ? `
+                  <tr>
+                    <td>Add Extra pulses</td>
+                    <td>
+                      <select class="inline-select ${extraPulseDisabled ? "gnf-control" : ""}" ${extraPulseDisabledText} onchange="updateExtraPulseSelection(this.value)">
+                        ${extraPulseOptions.map(option => `<option value="${option.name}" ${selectedExtraPulse.name === option.name ? "selected" : ""}>${option.name}</option>`).join("")}
+                      </select>
+                      ${extraPulseStatus}
+                    </td>
+                    <td>${formatCurrency(extraPulseTotal)}</td>
+                  </tr>` : "";
+      const bblinkTotalsOnlyRow = hasBbl ? `
+                  <tr>
+                    <td>BBLINK Eyewear (QTY)</td>
+                    <td>
+                      <select class="inline-select" onchange="updateBblinkQuantity(this.value)">
+                        ${[0,1,2,3,4,5].map(q => `<option value="${q}" ${selectedBblinkQuantity === q ? "selected" : ""}>${q === 0 ? "None" : q}</option>`).join("")}
+                      </select>
+                    </td>
+                  </tr>` : "";
+      const pulseProgramTotalsOnlyRow = hasBbl ? `<tr><td>Pulse Program - 1st Year - Unlimited</td><td>Included</td></tr>` : "";
+      const extraPulseTotalsOnlyRow = hasBbl ? `
+                  <tr>
+                    <td>Add Extra pulses</td>
+                    <td>
+                      <select class="inline-select ${extraPulseDisabled ? "gnf-control" : ""}" ${extraPulseDisabledText} onchange="updateExtraPulseSelection(this.value)">
+                        ${extraPulseOptions.map(option => `<option value="${option.name}" ${selectedExtraPulse.name === option.name ? "selected" : ""}>${option.name}</option>`).join("")}
+                      </select>
+                      ${extraPulseStatus}
+                    </td>
+                  </tr>` : "";
+
+      const detailedViewHtml = `
+          <div class="frontend-pricing-cards">
+            <section class="frontend-price-card ce-card">
+              <h5 class="card-title">Commission Eligible</h5>
+              <table class="data-table">
+                <thead><tr><th>Item</th><th>Reference</th><th>Value</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>System Type</td>
+                    <td><img class="joule-x-reference-img" src="site-assets/Joule X.png" alt="Joule X" onerror="this.outerHTML='JOULE X'" /></td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td>Selection</td>
+                    <td>${selectionReferenceHtml}${heroicSelected ? `<br>${heroicProductName}` : ""}</td>
+                    <td>${formatCurrency(selectionPrice)}</td>
+                  </tr>
+                  <tr>
+                    <td>Warranty</td>
+                    <td>
+                      <select class="inline-select" onchange='updateWarrantySelection(this.value, ${JSON.stringify(referenceField)}, ${basePrice}, ${JSON.stringify(selectedDisplay)}, ${JSON.stringify(componentRows)}, ${heroicSelected})'>
+                        ${warrantyOptions.map(option => `<option value="${option.name}" ${selectedWarrantyOption.name === option.name ? "selected" : ""}>${option.name}</option>`).join("")}
+                      </select>
+                    </td>
+                    <td>${formatCurrency(warrantyPrice)}</td>
+                  </tr>
+                  ${bblinkDetailedRow}
+                  <tr class="total-row">
+                    <td>Total</td>
+                    <td>SE + WA + BE</td>
+                    <td>${formatCurrency(commissionEligibleFloor)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section class="frontend-price-card ci-card">
+              <h5 class="card-title">Costed Inclusions</h5>
+              <table class="data-table">
+                <thead><tr><th>Item</th><th>Reference</th><th>Value</th></tr></thead>
+                <tbody>
+                  ${pulseProgramDetailedRow}
+                  ${extraPulseDetailedRow}
+                  <tr>
+                    <td>Success Builder</td>
+                    <td>
+                      <select class="inline-select" onchange="updateSuccessBuilderSelection(this.value)">
+                        ${successBuilderOptions.map(option => `<option value="${option.name}" ${selectedSuccessBuilder.name === option.name ? "selected" : ""}>${option.name}</option>`).join("")}
+                      </select>
+                    </td>
+                    <td>${formatCurrency(successBuilderTotal)}</td>
+                  </tr>
+                  ${hasTouchupOrComplete ? `<tr><td>Buffalo Smoke Evacuator</td><td>Costed inclusion</td><td>${formatCurrency(buffaloTotal)}</td></tr>` : ""}
+                  <tr><td>Concierge Marketing - Global Elite</td><td>Costed inclusion</td><td>${formatCurrency(conciergeTotal)}</td></tr>
+                  <tr><td>Freight</td><td>Costed inclusion</td><td>${formatCurrency(freightTotal)}</td></tr>
+                  <tr class="total-row">
+                    <td>Total</td>
+                    <td>Not commission eligible total</td>
+                    <td>${formatCurrency(nonCommissionEligibleTotal)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
+
+          <table class="data-table">
+            <tbody>
+              <tr><td>TOTAL PRICE</td><td>Commission eligible total plus costed inclusions</td><td>${formatCurrency(totalPrice)}</td></tr>
+            </tbody>
+          </table>
+
+          <div class="calculation-panel">
+            <div class="pricing-field-grid">
+              <div class="pricing-field">
+                <label for="floorIncrease">% Increase above floor</label>
+                <input id="floorIncrease" class="percent-input" type="number" inputmode="decimal" placeholder="0" min="0" step="0.1" value="${currentFloorIncreaseValue}" oninput="updateFloorIncreaseCalculation(${commissionEligibleFloor})" />
+                <div id="floorIncreaseError" class="field-note muted-note">Enter the percentage increase above floor.</div>
+              </div>
+              <div class="pricing-field">
+                <label for="adjustedSellPrice">Adjusted sell price</label>
+                <div id="adjustedSellPrice" class="calculated-value adjusted-value">—</div>
+              </div>
+              <div class="pricing-field">
+                <label for="overFloorRevenue">Over Floor Revenue</label>
+                <div id="overFloorRevenue" class="calculated-value">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="commission-panel">
+            <div class="commission-heading">COMMISSION ESTIMATOR</div>
+            <table class="data-table calculation-table">
+              <tbody>
+                <tr><td>*4.5% Commission up to floor</td><td id="floorCommission">${formatCurrency(commissionEligibleFloor * 0.045)}</td></tr>
+                <tr><td>25% Over floor</td><td id="overFloorCommission">—</td></tr>
+                <tr class="total-commission-row"><td>TOTAL COMMISSION:</td><td id="totalCommission">${formatCurrency(commissionEligibleFloor * 0.045)}</td></tr>
+              </tbody>
+            </table>
+          </div>
+      `;
+
+      const totalsOnlyViewHtml = `
+          <div class="frontend-pricing-cards totals-only-view">
+            <section class="frontend-price-card totals-only-card">
+              <h5 class="card-title">Totals Only</h5>
+              <table class="data-table totals-only-table">
+                <thead><tr><th>Item</th><th>Selection</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>System Type</td>
+                    <td><img class="joule-x-reference-img" src="site-assets/Joule X.png" alt="Joule X" onerror="this.outerHTML='JOULE X'" /></td>
+                  </tr>
+                  <tr>
+                    <td>Selection</td>
+                    <td>${selectionTotalsOnlyHtml}</td>
+                  </tr>
+                  <tr>
+                    <td>Warranty</td>
+                    <td>
+                      <select class="inline-select" onchange='updateWarrantySelection(this.value, ${JSON.stringify(referenceField)}, ${basePrice}, ${JSON.stringify(selectedDisplay)}, ${JSON.stringify(componentRows)}, ${heroicSelected})'>
+                        ${warrantyOptions.map(option => `<option value="${option.name}" ${selectedWarrantyOption.name === option.name ? "selected" : ""}>${option.name}</option>`).join("")}
+                      </select>
+                    </td>
+                  </tr>
+                  ${bblinkTotalsOnlyRow}
+                  ${pulseProgramTotalsOnlyRow}
+                  ${extraPulseTotalsOnlyRow}
+                  <tr>
+                    <td>Success Builder</td>
+                    <td>
+                      <select class="inline-select" onchange="updateSuccessBuilderSelection(this.value)">
+                        ${successBuilderOptions.map(option => `<option value="${option.name}" ${selectedSuccessBuilder.name === option.name ? "selected" : ""}>${option.name}</option>`).join("")}
+                      </select>
+                    </td>
+                  </tr>
+                  ${hasTouchupOrComplete ? `<tr><td>Buffalo Smoke Evacuator</td><td>Included</td></tr>` : ""}
+                  <tr><td>Concierge Marketing - Global Elite</td><td>Included</td></tr>
+                  <tr><td>Freight</td><td>Included</td></tr>
+                  <tr class="total-price-row">
+                    <td>TOTAL PRICE</td>
+                    <td>${totalsOnlyTotalPriceDisplay}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
+      `;
+
+      return `
+        <div class="output-card" id="pricingRenderTarget">
+          ${viewToggleHtml}
+          <div class="selected-title">
+            <div><span>Configuration Pricing</span><h4 id="ms4FloorPriceDisplay">${formatCurrency(commissionEligibleFloor)}</h4></div>
+            <div class="code-pill">AUD</div>
+          </div>
+          ${currentQuoteView === "totals" ? totalsOnlyViewHtml : detailedViewHtml}
+        </div>
+      `;
+    }
+
+    function updateFloorIncreaseCalculation(commissionEligibleFloor) {
+      const input = getElement("floorIncrease");
+      const adjustedSellPrice = getElement("adjustedSellPrice");
+      const overFloorRevenue = getElement("overFloorRevenue");
+      const overFloorCommission = getElement("overFloorCommission");
+      const totalCommission = getElement("totalCommission");
+      const floorPriceDisplay = getElement("ms4FloorPriceDisplay");
+      const error = getElement("floorIncreaseError");
+      const value = input.value.trim();
+      currentFloorIncreaseValue = value;
+      const upToFloorCommission = commissionEligibleFloor * 0.045;
+
+      floorPriceDisplay.classList.remove("floor-price-exceeded");
+
+      if (value === "") {
+        adjustedSellPrice.textContent = "—";
+        overFloorRevenue.textContent = "—";
+        overFloorCommission.textContent = "—";
+        totalCommission.textContent = formatCurrency(upToFloorCommission);
+        error.textContent = "Enter the percentage increase above floor.";
+        error.classList.remove("error-note");
+        error.classList.add("muted-note");
+        return;
+      }
+
+      const increasePercent = Number(value);
+      if (Number.isNaN(increasePercent) || increasePercent < 0) {
+        adjustedSellPrice.textContent = "—";
+        overFloorRevenue.textContent = "—";
+        overFloorCommission.textContent = "—";
+        totalCommission.textContent = formatCurrency(upToFloorCommission);
+        error.textContent = "Invalid value. Enter zero or a positive percentage increase above floor.";
+        error.classList.remove("muted-note");
+        error.classList.add("error-note");
+        return;
+      }
+
+      const adjustedPrice = commissionEligibleFloor * (1 + increasePercent / 100);
+      const overFloorAmount = adjustedPrice - commissionEligibleFloor;
+      const overFloorCommissionValue = overFloorAmount * 0.25;
+      const totalCommissionValue = upToFloorCommission + overFloorCommissionValue;
+
+      adjustedSellPrice.textContent = formatCurrency(adjustedPrice);
+      overFloorRevenue.textContent = formatCurrency(overFloorAmount);
+      overFloorCommission.textContent = formatCurrency(overFloorCommissionValue);
+      totalCommission.textContent = formatCurrency(totalCommissionValue);
+      if (adjustedPrice > commissionEligibleFloor) floorPriceDisplay.classList.add("floor-price-exceeded");
+      error.textContent = "Valid value.";
+      error.classList.remove("error-note");
+      error.classList.add("muted-note");
+    }
+
+    function resetConfiguration() {
+      document.querySelectorAll('#configurationBlock input[type="checkbox"]').forEach(input => {
+        input.checked = false;
+        input.disabled = false;
+        const card = input.closest(".checkbox-card");
+        if (card) card.classList.remove("disabled-choice");
+      });
+      updateConfigurationAvailability();
+      const configurationOutput = getElement("configurationOutput");
+      if (configurationOutput) configurationOutput.innerHTML = `<div class="placeholder"><strong>No configuration selected</strong><br />Select one or more configuration fields to match pricing.</div>`;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const saleType = getElement("saleType");
+      const systemType = getElement("systemType");
+      const configurationBlock = getElement("configurationBlock");
+      if (saleType) saleType.value = "N";
+      if (systemType) systemType.value = "Joule X|N";
+      if (configurationBlock) configurationBlock.classList.remove("hidden");
+      hydrateConfigMenuImages();
+      hydrateConfigMenuImages();
+      enforceSelectionRules();
+      updateConfiguration();
+    });
+
+
+
+    function initializeFrozenJouleXDefaults() {
+      const saleType = getElement("saleType");
+      const systemType = getElement("systemType");
+      const configurationBlock = getElement("configurationBlock");
+      if (saleType) saleType.value = "N";
+      if (systemType) systemType.innerHTML = '<option value="Joule X|N" selected>Joule X (N)</option>';
+      if (configurationBlock) configurationBlock.classList.remove("hidden");
+    }
+
+    document.addEventListener("DOMContentLoaded", initializeFrozenJouleXDefaults);
+
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./service-worker.js').catch(function (error) {
+          console.warn('Service worker registration failed:', error);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
