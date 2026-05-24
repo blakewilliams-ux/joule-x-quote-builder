@@ -1,24 +1,25 @@
-const CACHE_NAME = 'joule-x-quote-builder-v1';
-const ASSETS = [
+const CACHE_NAME = "joule-x-quote-builder-v3";
+const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./site-assets/Sciton.png",
-  "./site-assets/Joule X.png",
+  "./config-images.js",
+
+  "./site-assets/sciton.png",
+  "./site-assets/joule-x.png",
   "./site-assets/app-icon-192.png",
   "./site-assets/app-icon-512.png",
-  "./site-assets/app-icon-maskable-512.png",
-  "./site-assets/config-icons/BBL.png",
-  "./site-assets/config-icons/HEROic.png",
-  "./site-assets/config-icons/Halo.png",
-  "./site-assets/config-icons/HaloTribrid.png",
-  "./site-assets/config-icons/Diva.png",
-  "./site-assets/config-icons/diVa.png",
-  "./site-assets/config-icons/ClearV.png",
-  "./site-assets/config-icons/ClearSilk.png",
-  "./site-assets/config-icons/ClearSuite.png",
-  "./site-assets/config-icons/CompleteResurfacing.png",
-  "./site-assets/config-icons/Complete Resurfacing.png"
+
+  "./config/BBL.png",
+  "./config/Halo.png",
+  "./config/diVa.png",
+  "./config/ClearSilk.png",
+  "./config/ClearV.png",
+  "./config/HaloTribrid.png",
+  "./config/Touchup.png",
+  "./config/Complete-Resurfacing.png",
+  "./config/Heroic.png"
+  "./config/ClearSuite.png",
 ];
 
 self.addEventListener('install', event => {
